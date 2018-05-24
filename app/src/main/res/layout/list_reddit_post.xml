@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="post"
+            type="com.steamclock.template.models.RedditNewsDataResponse" />
+    </data>
+    <!-- Using the databinding library to update the view directly, no other code required! -->
+    <!-- See RedditPostAdapter for implementation -->
+    <!-- Use fields directly from RedditNewsDataResponse model using "@{post.<field>}, like we're doing for title below" -->
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:text="@{post.title}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

@@ -1,0 +1,92 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.steamclock.template"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // kotlin
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // coroutine support for kotlin
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+
+    // ===================== //
+    // ====== JET-PACK ===== //
+    // ===================== //
+
+    // appcompat (need to migrate to androidx, but that currently breaks the navigation library)
+    implementation "com.android.support:appcompat-v7:$appcompat"
+    implementation "com.android.support.constraint:constraint-layout:$constraintLayout"
+
+    // architecture components (lifecycles, livedata, viewmodels)
+    implementation "android.arch.lifecycle:extensions:$lifecycles"
+
+    // navigation library
+    implementation "android.arch.navigation:navigation-fragment-ktx:$navigation"
+    implementation "android.arch.navigation:navigation-ui-ktx:$navigation"
+
+    // room persistence
+    implementation "android.arch.persistence.room:runtime:$room"
+    kapt "android.arch.persistence.room:compiler:$room"
+
+    // workmanager (not being used in this implementation)
+//    implementation "android.arch.work:work-runtime-ktx:$workManager"
+    // implementation "android.arch.work:work-firebase:$work_version" // optional - Firebase JobDispatcher support
+
+    // paging library for infinite loading + bonus recyclerview support
+    implementation "android.arch.paging:runtime:$paging"
+
+    // ===================== //
+    // ==== THIRD PARTY ==== //
+    // ===================== //
+
+    // networking
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:$retrofitCoroutines"
+
+    // json -> object conversion. Primarily using moshi, as it no longer requires kotlin-reflect
+
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi"
+
+    // dependency injection via dagger
+
+    implementation "com.google.dagger:dagger:$dagger"
+    kapt "com.google.dagger:dagger-compiler:$dagger"
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+kotlin {
+    // need to enable coroutines support, as they're still technically experimental.
+    experimental {
+        coroutines "enable"
+    }
+}
